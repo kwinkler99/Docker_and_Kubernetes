@@ -1,0 +1,5 @@
+FROM tworzy dockerowy obraz node:12-alpine.
+WORKDIR służy do definiowania katalogu roboczego kontenera.
+COPY dodaje pliki z bieżacego katalogu.
+RUN buduje aplikację za pomocą yarn install --production.
+CMD określa, jakie polecenie ma zostać uruchomione w kontenerze.

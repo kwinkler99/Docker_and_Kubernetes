@@ -1,0 +1,6 @@
+sudo docker ps
+sudo docker stop trusting_buck
+sudo docker ps -a
+sudo docker rm trusting_buck
+sudo docker ps -a
+
