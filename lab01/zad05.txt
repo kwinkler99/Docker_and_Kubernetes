@@ -1,0 +1,14 @@
+sudo docker stop sleepy_darwin
+sudo docker rm sleepy_darwin
+sudo docker build . -t docker/getting-started
+sudo docker run -dp 3000:3000 docker/getting-started
+
+
+docker -d ->
+--detach
+Uruchom kontener w tle i wyswietl jego ID
+
+ 
+docker -p -> 
+--publish list  
+Opublikuj port(y) kontenera na hoście
