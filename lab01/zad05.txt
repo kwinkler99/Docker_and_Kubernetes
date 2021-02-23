@@ -4,11 +4,11 @@ sudo docker build . -t docker/getting-started
 sudo docker run -dp 3000:3000 docker/getting-started
 
 
-docker -d ->
+docker run -d ->
 --detach
 Uruchom kontener w tle i wyswietl jego ID
 
  
-docker -p -> 
+docker run -p -> 
 --publish list  
 Opublikuj port(y) kontenera na hoście
