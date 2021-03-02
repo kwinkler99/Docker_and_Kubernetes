@@ -1,0 +1,7 @@
+sudo docker run -it --rm -d -p 4200:80 --name web nginx
+
+-it -> podlacza dockera do standardowego wejscia kontenera
+-rm -> Automatycznie usuwa kontener
+-d -> detach Uruchamia kontener w tle i drukuje identyfikator kontenera
+-p -> publish list Publikuje port(y) kontenera na hoscie 
+--name nadaje nazwe
