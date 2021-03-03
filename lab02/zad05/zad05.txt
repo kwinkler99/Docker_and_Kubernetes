@@ -1,0 +1,7 @@
+https://hub.docker.com/r/kasiawinkler/technologie_chmurowe
+
+docker build 
+docker run 
+docker images
+docker tag <image_id> <user_name>/<repo_name>:<tag_name>
+docker push <user_name>/<repo_name>:<tag_name>
