@@ -3,6 +3,7 @@ WORKDIR /usr/src/my_node_app
 COPY package*.json ./
 RUN npm install
 COPY ./express.js ./server.js
+COPY ./.dockerignore ./.dockerignore
 EXPOSE 8080
 CMD [ "node", "server.js" ]
 
