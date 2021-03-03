@@ -1,0 +1,1 @@
+sudo docker exec -it cc8274561932 sh

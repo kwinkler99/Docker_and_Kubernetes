@@ -1,0 +1,2 @@
+docker pull busybox
+sudo docker run -it busybox echo 'hello world! I’m busybox!’'

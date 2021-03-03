@@ -1,0 +1,9 @@
+sudo docker start -a laczy sie z wyjsciem/wejsciem
+np przy wywolaniu aplikacji react z kontenera to wypisuje ,,Compiled successfully!..."
+bez atrybutu -a uruchamia i zamyka kontener
+
+sudo docker start <container_id>
+sudo docker run <image_id>
+
+run -> jesli nie ma takiego obrazu to go sciaga jesli taki istnieje
+start -> jesli taki nie istnieje to wypisuje tylko numer kontenera

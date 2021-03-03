@@ -1,0 +1,3 @@
+sudo docker ps -a
+sudo docker rm d66c16daee9a -> usuwa pojedyncze kontenery
+sudo docker container prune -> usuwa wszytskie zatrzymane kontenery

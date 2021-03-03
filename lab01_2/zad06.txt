@@ -1,0 +1,2 @@
+sudo docker run -it busybox sh
+sudo docker logs cc8274561932
