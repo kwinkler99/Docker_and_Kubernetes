@@ -1,0 +1,13 @@
+docker run -it busybox sh
+ls
+echo "My first file"  > readme.txt
+ls
+exit
+docker run -it busybox sh
+
+-------------------------
+brak pliku 
+Korzystajac z docker run tworzymy nowy kontener na podstawie okreslonego 
+obrazu. Jeśli chcemy zachować zmiany powinniśmy skorzystac z docker pull,
+który zapisze zmiany w obrazie.
+Lub mozna uruchomic dany kontener przez polecenie docker exec
