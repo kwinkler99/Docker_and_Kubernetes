@@ -1,0 +1,27 @@
+docker stop first
+docker stop my-nginx
+docker network ls
+NETWORK ID     NAME            DRIVER    SCOPE
+dca829d08fd1   bridge          bridge    local
+e079d20d9de5   buddy_default   bridge    local
+605c5aa9ed24   firstNetwork    bridge    local
+f71871dfb6f9   host            host      local
+f4cab9de8daf   none            null      local
+
+docker network rm firstNetwork
+docker network ls
+NETWORK ID     NAME            DRIVER    SCOPE
+dca829d08fd1   bridge          bridge    local
+e079d20d9de5   buddy_default   bridge    local
+f71871dfb6f9   host            host      local
+f4cab9de8daf   none            null      local
+
+docker container ps -a
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS                            PORTS     NAMES
+bb7e4586cfad   nginx:stable   "/docker-entrypoint.…"   17 minutes ago   Exited (137) 2 minutes ago                  first
+50f9c5e2ce1e   nginx:stable   "/docker-entrypoint.…"   23 minutes ago   Exited (137) About a minute ago             my-nginx
+
+docker container rm bb7e4586cfad
+docker container rm 50f9c5e2ce1e
+docker container ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
