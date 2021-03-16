@@ -1,5 +1,28 @@
 docker run --name first nginx:stable sleep 30000
 
 docker inspect first
+.
+.
+.
+"Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "dca829d08fd14117529da7cf7ac9e7cd8d039624457a199fc1902878565df21a",
+                    "EndpointID": "dc6a7c9ccabe46d1bd325e0ab2c61f72b3bd049a0e5e063d2303c50027a779c8",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                }
+            }
+.
+.
+.
 
-siec nginx: "Gateway": "172.17.0.1"
+first jest podlaczony do sieci bridge

@@ -1,0 +1,92 @@
+docker network connect firstNetwork first
+docker network inspect firstNetwork
+.
+.
+.
+"Containers": {
+            "50f9c5e2ce1e30668601e0708cec9f2265b7b4c4881d8ace70ba9ae9f0bf57e6": {
+                "Name": "my-nginx",
+                "EndpointID": "6869b52a852177529752880948a48bda0d523e17ca7eab7236e589d06abde42e",
+                "MacAddress": "02:42:ac:13:00:02",
+                "IPv4Address": "172.19.0.2/16",
+                "IPv6Address": ""
+            },
+            "bb7e4586cfad5b56eed64b40c5229acdbbdf1264b8c5c15a0630a027a9c23900": {
+                "Name": "first",
+                "EndpointID": "97831336ce5ca21970acc009c17f388a2c8fbf86c2ff78fadc34e58976ecd231",
+                "MacAddress": "02:42:ac:13:00:03",
+                "IPv4Address": "172.19.0.3/16",
+                "IPv6Address": ""
+            }
+        },
+.
+.
+.
+docker inspect first
+.
+.
+.
+"Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "dca829d08fd14117529da7cf7ac9e7cd8d039624457a199fc1902878565df21a",
+                    "EndpointID": "dc6a7c9ccabe46d1bd325e0ab2c61f72b3bd049a0e5e063d2303c50027a779c8",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                },
+                "firstNetwork": {
+                    "IPAMConfig": {},
+                    "Links": null,
+                    "Aliases": [
+                        "bb7e4586cfad"
+                    ],
+                    "NetworkID": "605c5aa9ed24fecd029c1723f405b779955ef2e6a5d98eec876eb5e95fb067ee",
+                    "EndpointID": "97831336ce5ca21970acc009c17f388a2c8fbf86c2ff78fadc34e58976ecd231",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.3",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:13:00:03",
+                    "DriverOpts": {}
+                }
+            }
+.
+.
+.
+docker network disconnect bridge first
+docker inspect first
+.
+.
+.
+"Networks": {
+                "firstNetwork": {
+                    "IPAMConfig": {},
+                    "Links": null,
+                    "Aliases": [
+                        "bb7e4586cfad"
+                    ],
+                    "NetworkID": "605c5aa9ed24fecd029c1723f405b779955ef2e6a5d98eec876eb5e95fb067ee",
+                    "EndpointID": "97831336ce5ca21970acc009c17f388a2c8fbf86c2ff78fadc34e58976ecd231",
+                    "Gateway": "172.19.0.1",
+                    "IPAddress": "172.19.0.3",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:13:00:03",
+                    "DriverOpts": {}
+                }
+            }
+.
+.
+.
