@@ -1,0 +1,29 @@
+docker run --name my-nginx --network firstNetwork nginx:stable sleep 3000
+-
+
+docker network ls
+NETWORK ID     NAME            DRIVER    SCOPE
+dca829d08fd1   bridge          bridge    local
+e079d20d9de5   buddy_default   bridge    local
+605c5aa9ed24   firstNetwork    bridge    local
+f71871dfb6f9   host            host      local
+f4cab9de8daf   none            null      local
+
+docker network inspect firstNetwork
+.
+.
+.
+"Containers": {
+            "50f9c5e2ce1e30668601e0708cec9f2265b7b4c4881d8ace70ba9ae9f0bf57e6": {
+                "Name": "my-nginx",
+                "EndpointID": "6869b52a852177529752880948a48bda0d523e17ca7eab7236e589d06abde42e",
+                "MacAddress": "02:42:ac:13:00:02",
+                "IPv4Address": "172.19.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+.
+.
+.
+
+# podlaczony tylko kontener nginx:stable ktory nazwalam my-nginx

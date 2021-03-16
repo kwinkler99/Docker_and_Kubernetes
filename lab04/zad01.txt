@@ -1,0 +1,5 @@
+docker run --name first nginx:stable sleep 30000
+
+docker inspect first
+
+siec nginx: "Gateway": "172.17.0.1"
