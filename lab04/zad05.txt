@@ -1,0 +1,47 @@
+mkdir pgdata
+na jednym oknie:
+docker run --rm --name my-postgres -e POSTGRES_PASSWORD=password -v /home/kasia/Prywatne/inf/semestr_4/TC/TechnologieChmurowe/lab04/pgdata:/var/lib/postgresql/data postgres:alpine
+na drugim oknie:
+docker exec -it my-postgres sh
+su - postgres
+psql
+CREATE USER postgres_user WITH PASSWORD 'password';
+CREATE DATABASE my_postgres_db OWNER postgres_user;
+
+----------------------------------------------------
+Exit out of the default "postgres" user account and log into the user you created with the following commands:
+sudo su - postgres_user
+
+Sign into the database you created with the following command:
+psql my_postgres_db
+----------------------------------------------------
+
+CREATE TABLE my_table (
+name varchar,
+surname varchar,
+age int
+);
+
+postgres=# INSERT INTO my_table(name, surname, age)
+postgres-# VALUES ('kasia', 'winkler', 22);
+INSERT 0 1
+
+postgres=# SELECT * FROM my_table;
+ name  | surname | age 
+-------+---------+-----
+ kasia | winkler |  22
+(1 row)
+
+docker stop 02c09956a1b5;
+docker run --rm --name my-postgres -e POSTGRES_PASSWORD=password -v /home/kasia/Prywatne/inf/semestr_4/TC/TechnologieChmurowe/lab04/pgdata:/var/lib/postgresql/data postgres:alpine
+docker exec -it my-postgres sh
+su - postgres
+psql
+
+postgres=# SELECT * FROM my_table;
+ name  | surname | age 
+-------+---------+-----
+ kasia | winkler |  22
+(1 row)
+
+Dane nadal istnieja
