@@ -20,6 +20,7 @@ const clientPostgres = new Client(dbConnDataPostgres)
 clientPostgres
     .connect()
     .then(() => {
+        clientPostgres.query('CREATE TABLE IF NOT EXISTS NWD(numA int, numB int, result int)');
         console.log('Connected to PostgreSQL');
     })
     .catch(err => console.error('Connection error', err.stack));
@@ -42,11 +43,33 @@ clientRedis.on('connect', () => {
 });
 
 
-//ENDPOINTY
+//FUNKCJA NWD
+function nwd(a, b){
+    let tmp;
+    while( b != 0 ){
+        tmp = a;
+        a = b;
+        b = tmp % b;
+    }
+    return a;
+}
 
-app.get('/', (req, res) => {
-    res.send('hello world');
+//ENDPOINTY
+app.get('/', async (req, res) => {
+    const { numA, numB } = req.body;
+    const value = nwd(parseInt(numA), parseInt(numB));
+
+    const resultPostgres = (await clientPostgres.query(
+        'INSERT INTO NWD (numA, numB, result) VALUES($1, $2, $3) RETURNING *', [numA, numB, value]));
+
+    const resultRedis = (await clientRedis.set((numA, numB), value));
+
+    res.send({'resultPostgres': resultPostgres.rows, 'resultRedis': resultRedis});
 });
+
+
+
+
 
 app.listen(5000, () => {
     console.log('MY REST API running on port 5000!');
