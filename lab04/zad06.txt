@@ -1,0 +1,26 @@
+docker network create MyNetwork
+docker run -e POSTGRES_PASSWORD=password --name my-postgres --network MyNetwork postgres:alpine
+
+docker run --name my-redis -it redis:alpine sh
+docker network connect MyNetwork my-redis
+docker network inspect MyNetwork
+
+"Containers": {
+            "1bf8eb9d76f9b75563af46ac7c0ff5407fe32ea2b6008287260c72b28f14a8be": {
+                "Name": "my-redis",
+                "EndpointID": "1001a762f1d5c3cf5bdc575ee3dfce2cccb3739b3e6ed825eee9d7d57f87ffcb",
+                "MacAddress": "02:42:ac:12:00:03",
+                "IPv4Address": "172.18.0.3/16",
+                "IPv6Address": ""
+            },
+            "e739a92de83cf4427aaa4ca131e8bba7496b8482cd239838e7ff45e7a96c0af0": {
+                "Name": "my-postgres",
+                "EndpointID": "bacc5ffcb2c334704204bef69234bded4e4fa5d714c68040dd55af6aa448be0f",
+                "MacAddress": "02:42:ac:12:00:02",
+                "IPv4Address": "172.18.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+
+
+docker exec -it my-postgres sh
