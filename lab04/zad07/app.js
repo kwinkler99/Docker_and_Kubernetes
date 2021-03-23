@@ -20,7 +20,7 @@ const clientPostgres = new Client(dbConnDataPostgres)
 clientPostgres
     .connect()
     .then(() => {
-        clientPostgres.query('CREATE TABLE IF NOT EXISTS NWD(numA int, numB int, result int)');
+        clientPostgres.query('CREATE TABLE IF NOT EXISTS nwd(numA int, numB int, result int)');
         console.log('Connected to PostgreSQL');
     })
     .catch(err => console.error('Connection error', err.stack));
@@ -55,20 +55,39 @@ function nwd(a, b){
 }
 
 //ENDPOINTY
+
 app.get('/', async (req, res) => {
+    const result = (await clientPostgres.query(
+        'SELECT * FROM nwd'
+    ))
+    res.send({'result': result.rows});
+})
+
+app.post('/', async (req, res) => {
     const { numA, numB } = req.body;
     const value = nwd(parseInt(numA), parseInt(numB));
 
-    const resultPostgres = (await clientPostgres.query(
-        'INSERT INTO NWD (numA, numB, result) VALUES($1, $2, $3) RETURNING *', [numA, numB, value]));
+    //sprawdzenie czy dany klucz wystepuje w Redis
+    let tmp;
+    (await clientRedis.get((numA, numB), (err, result) => {
+        if (err) return res.sendStatus(400)
+        if(result){
+            tmp = result;
+        }
+    }))
 
-    const resultRedis = (await clientRedis.set((numA, numB), value));
+    //jesli nie wystepuje w redis to zapisuje do obu baz danych
+    if(!tmp){
+        //zapis do postgresql
+        tmp = (await clientPostgres.query(
+            'INSERT INTO nwd (numA, numB, result) VALUES($1, $2, $3) RETURNING result', [numA, numB, value])).rows;
 
-    res.send({'resultPostgres': resultPostgres.rows, 'resultRedis': resultRedis});
+        //zapis do redisa
+        (await clientRedis.set((numA, numB), value));
+    }
+
+    res.send({'result': tmp});
 });
-
-
-
 
 
 app.listen(5000, () => {
