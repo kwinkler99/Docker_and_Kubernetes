@@ -1,0 +1,16 @@
+mkdir zad07
+cd zad07
+create app.js
+npm init
+npm install node
+npm install express
+npm install pg
+npm install redis
+
+
+
+docker run --name my-postgres --network MyNetwork -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres:alpine
+docker run --name my-redis --network MyNetwork -p 6379:6379 redis:alpine redis-server
+docker build -t server-api .
+
+docker run --name connection-database --network MyNetwork -e REDIS_HOST=my-redis -e REDIS_PORT=6379 -e POSTGRES_HOST=my-postgres -e POSTGRES_PORT=5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres -p 5000:5000 server-api
