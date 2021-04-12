@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+    my-redis:
+        image: redis
+        container_name: my-redis
+
+    api:
+        build: 
+            dockerfile: Dockerfile.dev
+            context: ./backend
+        environment:
+            - REDIS_HOST=my-redis
+            - REDIS_PORT=6379
+        ports:
+            - 3000:3000
+        
+        volumes:
+            - "/app/node_modules"
+            - "./backend:/app"
