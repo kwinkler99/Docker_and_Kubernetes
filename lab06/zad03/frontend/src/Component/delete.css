@@ -1,0 +1,43 @@
+.confirmDeleteAll{
+	font-size: 25px;
+    background: #389482;
+	text-align: center;
+	margin: 0 auto;
+    height: 210px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.buttonDelete input[type="button"] {
+    position: relative;
+	display: block;
+	padding: 19px 39px 18px 39px;
+	color: #FFF;
+	margin: 0 auto;
+	background: #389482;
+	font-size: 18px;
+	text-align: center;
+	font-style: normal;
+	width: 100%;
+	border: 1px solid #389482;
+	border-width: 1px 1px 3px;
+	margin-bottom: 10px;
+}
+
+.itemChecked{
+	background: #389482;
+    display: flex;
+    flex-wrap: wrap;
+    width: 15%;
+    margin-bottom: 30px;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition:all 0.3s ease;
+}
+
+.itemChecked:hover{
+    background-color: #227060;
+    transform: scale(0.9);
+}
