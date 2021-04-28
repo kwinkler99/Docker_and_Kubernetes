@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-nginx-pod
+spec:
+  containers:
+    - name: my-nginx
+      image: image-nginx
+      imagePullPolicy: Never # inaczej kubernetes próbuje 
+                             # ściągnąć obraz image-nginx zamiast
+                             # skorzystac z gotowego

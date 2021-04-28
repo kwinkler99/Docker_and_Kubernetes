@@ -1,0 +1,5 @@
+eval $(minikube docker-env) -> zezwala minikube na dostęp do utworzonych lokalnie obrazów
+docker build image-nginx .
+kubectl apply -f my-nginx-pod.yaml  -> stworzenie poda
+kubectl exec -it my-nginx-pod -- sh -> wejscie w konsole poda
+kubectl cp default/my-nginx-pod:usr/share/nginx/html/index.html ./index.html -> skopiowanie pliku index.html z poda na local
