@@ -1,0 +1,10 @@
+eval $(minikube docker-env)
+cd frontend
+docker build -t frontend-image .
+cd ..
+kubectl apply -f frontend-pod.yaml
+kubectl get pods
+kubectl apply -f frontend-service.yaml
+kubectl get service
+minikube ip -> w przeglądarce <minikube_ip>:30300
+
