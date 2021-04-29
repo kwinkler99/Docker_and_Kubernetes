@@ -1,0 +1,8 @@
+ClusterIP (domyślnie) - Wystawia serwis poprzez wewnętrzny adres 
+    IP w klastrze. W ten sposób serwis jest dostępny tylko wewnątrz 
+    klastra.
+
+NodePort - Wystawia serwis na tym samym porcie na każdym z 
+    wybranych węzłów klastra przy pomocy NAT. W ten sposób serwis 
+    jest dostępny z zewnątrz klastra poprzez <NodeIP>:<NodePort>. 
+    Nadzbiór ClusterIP.
