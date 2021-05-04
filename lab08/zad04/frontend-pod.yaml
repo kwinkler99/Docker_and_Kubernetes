@@ -12,5 +12,5 @@ spec:
       image: frontend-image
       imagePullPolicy: Never
       ports:
-        - containerPort: 80
+        - containerPort: 3000
 

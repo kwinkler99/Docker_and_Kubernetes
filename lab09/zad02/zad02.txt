@@ -1,0 +1,26 @@
+docker images
+docker run -it frontend-image sh
+sed -i 's/Edit /Hello/g' App.js -> zmiana Edit na Hello
+docker ps -a
+docker commit 6a74291acc77 frontend-image:release0
+
+//LUB
+
+latest -> jedna wersja obrazu | docker build frontend-image .
+release0 -> druga wersja obrazu | docker build frontend-image:release0 .
+release1 -> trzecia wersja obrazu | docker build frontend-image:release1 .
+
+docker images
+REPOSITORY                                TAG        IMAGE ID       CREATED         SIZE
+frontend-image                            release0   83b95d5b398c   6 seconds ago   153MB
+frontend-image                            latest     c61f486291bd   4 hours ago     134MB
+
+(usuniecie poprzedniego replicaSet)
+
+kubectl aplly -f frontend-deployment.yaml
+kubectl rollout status deployment frontend-deployment
+deployment "frontend-deployment" successfully rolled out
+192.168.49.2:30300 -> strona działa poprawnie z ,,Edit"
+
+aplikacja zmienia sie na nowa podczas tworzeniu deploymentu a potem wraca
+do poprzedniej wersji 
