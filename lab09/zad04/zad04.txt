@@ -1,0 +1,7 @@
+cd backend
+docker build -t backend .
+cd ..
+kubectl apply -f backend-deployment.yaml
+kubectl apply -f my-node-port.yaml
+minikube ip
+curl <minikube_ip>:31000/api
