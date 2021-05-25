@@ -1,0 +1,56 @@
+jak sprawdzic pliki na node:
+minikube ssh
+...
+
+cd /data
+mkdir postgres-data
+
+kubectl apply -f .
+kubectl get all
+
+...
+NAME                                       READY   STATUS    RESTARTS   AGE
+pod/postgres-deployment-6d5cc47854-lrgpp   1/1     Running   0          61s
+pod/postgres-deployment-6d5cc47854-nh7mc   1/1     Running   0          61s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   2d14h
+
+NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/postgres-deployment   2/2     2            2           61s
+
+NAME                                             DESIRED   CURRENT   READY   AGE
+replicaset.apps/postgres-deployment-6d5cc47854   2         2         2       61s
+...
+
+kubectl exec --stdin --tty pod/postgres-deployment-6d5cc47854-lrgpp -- /bin/bash
+su - postgres
+psql
+
+CREATE TABLE my_table (
+name varchar,
+surname varchar,
+age int
+);
+
+postgres=# INSERT INTO my_table(name, surname, age)
+postgres-# VALUES ('kasia', 'winkler', 22);
+INSERT 0 1
+
+postgres=# SELECT * FROM my_table;
+ name  | surname | age 
+-------+---------+-----
+ kasia | winkler |  22
+(1 row)
+
+kubectl delete deployment.apps/postgres-deployment
+kubectl apply -f .
+kubectl exec --stdin --tty pod/postgres-deployment-6d5cc47854-nhv8g -- /bin/bash
+su - postgres
+psql
+postgres=# SELECT * FROM my_table;
+ name  | surname | age 
+-------+---------+-----
+ kasia | winkler |  22
+(1 row)
+
