@@ -54,7 +54,7 @@ spec:
       volumes:
       - name: postgres-volume
         hostPath:
-          path: /home/kasia/Prywatne/inf/4_semestr/TC/TechnologieChmurowe/lab10/zad03/pgdata
+          path: /data
           type: DirectoryOrCreate
   replicas: 2
   selector:

@@ -1,0 +1,41 @@
+kubectl apply -f .
+kubectl exec --stdin --tty pod/postgres-deployment-745d45fbbc-w48dq -- /bin/bash
+su - postgres
+psql
+CREATE USER postgres_user WITH PASSWORD 'password';
+CREATE DATABASE my_postgres_db OWNER postgres_user;
+
+CREATE TABLE my_table (
+name varchar,
+surname varchar,
+age int
+);
+
+postgres=# INSERT INTO my_table(name, surname, age)
+postgres-# VALUES ('kasia', 'winkler', 22);
+INSERT 0 1
+
+postgres=# SELECT * FROM my_table;
+ name  | surname | age 
+-------+---------+-----
+ kasia | winkler |  22
+(1 row)
+
+kubectl delete pod/postgres-deployment-745d45fbbc-w48dq
+kubectl get all
+
+...
+pod/postgres-deployment-745d45fbbc-rk2gs   1/1     Running   2          33m
+pod/postgres-deployment-745d45fbbc-snnmr   1/1     CreatingContener   0          5s
+...
+kubectl exec --stdin --tty pod/postgres-deployment-745d45fbbc-snnmr -- /bin/bash
+bash-5.1# su - postgres
+postgres-deployment-745d45fbbc-snnmr:~$ psql
+psql (13.3)
+Type "help" for help.
+
+postgres=# SELECT * FROM my_table;
+ name  | surname | age 
+-------+---------+-----
+ kasia | winkler |  22
+(1 row)
