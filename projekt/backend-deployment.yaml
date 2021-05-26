@@ -47,8 +47,8 @@ spec:
             - name: REDIS_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: backend-configmap
-                  key: REDIS_HOST
+                  name: redis-configmap
+                  key: database_url
 
 
   replicas: 2

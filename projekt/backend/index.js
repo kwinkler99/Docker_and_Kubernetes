@@ -34,21 +34,21 @@ mongoose
 
 const Calculator = require('./models/Calculator');
 
-// //konfiguracja Redisa
-// const Redis = require("ioredis");
+//konfiguracja Redisa
+const Redis = require("ioredis");
 
-// const dbConnDataRedis = {
-//   port: process.env.REDIS_PORT,
-//   host: process.env.REDIS_HOST,
-// };
-// const clientRedis = new Redis(dbConnDataRedis);
+const dbConnDataRedis = {
+  port: process.env.REDIS_PORT,
+  host: process.env.REDIS_HOST,
+};
+const clientRedis = new Redis(dbConnDataRedis);
 
-// clientRedis.on('error', err => {
-//     throw err;
-// });
-// clientRedis.on('connect', () => {
-//     console.log(`Connected to Redis.`)
-// });
+clientRedis.on('error', err => {
+    throw err;
+});
+clientRedis.on('connect', () => {
+    console.log(`Connected to Redis.`)
+});
 
 
 //ENDPOINTY

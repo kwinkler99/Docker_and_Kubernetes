@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: redis-deployment
+  labels:
+    type: redis
+
+spec:
+  template:
+    metadata:
+      labels:
+        type: redis
+
+    spec:
+      containers:
+        - name: redis-pod
+          image: redis
+          ports:
+          - containerPort: 27017
+          env:
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-configmap
+                  key: REDIS_PORT
+
+
+  replicas: 1
+  selector:
+    matchLabels:
+      type: redis
