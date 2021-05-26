@@ -12,7 +12,6 @@ app.use(cors())
 require('dotenv').config();
 
 //konfiguracja Mongo
-
 const dbConnData = {
     host: process.env.MONGO_HOST,
     port: process.env.MONGO_PORT,
@@ -61,7 +60,7 @@ app.get('/mongo', async (req, res) => {
 })
 
 app.get('/redis', async (req, res) => {
-    const allKeys = await client.keys("*", (err, result) => {
+    const allKeys = await clientRedis.keys("*", (err, result) => {
         if (err) return res.sendStatus(400)
         return result
       })
