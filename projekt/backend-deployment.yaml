@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: backend-deployment
+  labels:
+    type: backend
+
+spec:
+  template:
+    metadata:
+      labels:
+        type: backend
+
+    spec:
+      containers:
+        - name: backend-pod
+          image: backend
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MONGO_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-configmap
+                  key: database_url
+
+            - name: MONGO_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-configmap
+                  key: MONGO_PORT
+
+            - name: MONGO_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-configmap
+                  key: MONGO_DATABASE
+            
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-configmap
+                  key: REDIS_PORT
+
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-configmap
+                  key: REDIS_HOST
+
+
+  replicas: 2
+  selector:
+    matchLabels:
+      type: backend
