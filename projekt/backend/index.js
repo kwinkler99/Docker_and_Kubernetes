@@ -51,35 +51,85 @@ clientRedis.on('connect', () => {
 
 
 //ENDPOINTY
-app.get('/mongo', async (req, res) => {
+// app.get('/mongo', async (req, res) => {
 
-    Calculator.find(function (err, result) {
-        if (err) return console.error(err);
-        return res.send(result);
-    })    
+//     Calculator.find(function (err, result) {
+//         if (err) return console.error(err);
+//         return res.send(result);
+//     })    
+// })
+
+// app.get('/redis', async (req, res) => {
+//     const allKeys = await clientRedis.keys("*", (err, result) => {
+//         if (err) return res.sendStatus(400)
+//         return result
+//       })
+//       return res.send({
+//         all: allKeys
+//       })  
+// })
+
+
+//GET
+app.get('/sum', async (req, res) => {
+  const history = await Calculator.aggregate()
+    .match({
+      operation: {$eq: 'sum'}
+    })
+
+  res.send(history)
 })
 
-app.get('/redis', async (req, res) => {
-    const allKeys = await clientRedis.keys("*", (err, result) => {
-        if (err) return res.sendStatus(400)
-        return result
-      })
-      return res.send({
-        all: allKeys
-      })  
+app.get('/substraction', async (req, res) => {
+  const history = await Calculator.aggregate()
+    .match({
+      operation: {$eq: 'substraction'}
+    })
+
+  res.send(history)
 })
 
+app.get('/multiply', async (req, res) => {
+  const history = await Calculator.aggregate()
+    .match({
+      operation: {$eq: 'multiply'}
+    })
+
+  res.send(history)
+})
+
+app.get('/division', async (req, res) => {
+  const history = await Calculator.aggregate()
+    .match({
+      operation: {$eq: 'division'}
+    })
+
+  res.send(history)
+})
+
+
+//POST
 app.post('/', async (req, res) => {
-    try {
+  const new_operation = new Calculator({
+    ...req.body
+  })
 
-    } catch (error) {
-    }
+  const inserted_operation= await new_operation.save();
+
+  return res.send(inserted_operation);
 });
 
-app.get('/api', (req, res) => {
-    res.send(`${appId} - test project`)
+//DELETE
+app.delete('/', async (req, res) => {
+  const id = req
+  console.log(id)
+  // const result = await Calculator.findByIdAndDelete(id)
+  // res.send(result)
 })
 
+
+
+//LISTEN
 app.listen(appPort, res => {
     console.log(`App listening on port  ${appPort}`)
 });

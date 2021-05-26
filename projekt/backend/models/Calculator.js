@@ -1,7 +1,11 @@
 const { Schema, model } = require('mongoose');
 
 const calculatorSchema = new Schema({
-    number: Number
+    operation: String,
+    number_one: Number,
+    sign: String,
+    number_two: Number,
+    result: Number
 });
 
 module.exports = model('Calculator', calculatorSchema);
