@@ -22,6 +22,7 @@ class App extends Component {
     this.getMultiply = this.getMultiply.bind(this)
     this.getDivision = this.getDivision.bind(this)
     this.deleteHistory = this.deleteHistory.bind(this)
+    this.clear = this.clear.bind(this)
   }
  
   
@@ -78,18 +79,20 @@ class App extends Component {
       result: parseInt(this.state.number_one) + parseInt(this.state.number_two)
     }
 
-    axios.post('/backend/', new_operation)
-      .then(res => {
+    if (this.state.number_one !== "" && this.state.number_two !== ""){
+      axios.post('/backend/', new_operation)
+        .then(res => {
 
-        this.setState({
-          ...this.state,
-          sum: res.data.filter(item => item.operation === 'sum'),
-          result: parseInt(this.state.number_one) + parseInt(this.state.number_two)
+          this.setState({
+            ...this.state,
+            sum: res.data.filter(item => item.operation === 'sum'),
+            result: parseInt(this.state.number_one) + parseInt(this.state.number_two)
+          })
         })
-      })
-      .catch(error => {
-        console.log(error)
-      })
+        .catch(error => {
+          console.log(error)
+        })
+    }
    
   }
 
@@ -102,17 +105,19 @@ class App extends Component {
       result: parseInt(this.state.number_one) - parseInt(this.state.number_two)
     }
 
-    axios.post('/backend/', new_operation)
-      .then(res => {
-        this.setState({
-          ...this.state,
-          substraction: res.data.filter(item => item.operation === 'substraction'),
-          result: parseInt(this.state.number_one) - parseInt(this.state.number_two)
+    if (this.state.number_one !== "" && this.state.number_two !== ""){
+      axios.post('/backend/', new_operation)
+        .then(res => {
+          this.setState({
+            ...this.state,
+            substraction: res.data.filter(item => item.operation === 'substraction'),
+            result: parseInt(this.state.number_one) - parseInt(this.state.number_two)
+          })
         })
-      })
-      .catch(error => {
-        console.log(error)
-      })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 
   getMultiply(){
@@ -124,18 +129,19 @@ class App extends Component {
       result: parseInt(this.state.number_one) * parseInt(this.state.number_two)
     }
 
-    axios.post('/backend/', new_operation)
-      .then(res => {
-        this.setState({
-          ...this.state,
-          multiply: res.data.filter(item => item.operation === 'multiply'),
-          result: parseInt(this.state.number_one) * parseInt(this.state.number_two)
+    if (this.state.number_one !== "" && this.state.number_two !== ""){
+      axios.post('/backend/', new_operation)
+        .then(res => {
+          this.setState({
+            ...this.state,
+            multiply: res.data.filter(item => item.operation === 'multiply'),
+            result: parseInt(this.state.number_one) * parseInt(this.state.number_two)
+          })
         })
-      })
-      .catch(error => {
-        console.log(error)
-      })
-
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 
   getDivision(){
@@ -147,32 +153,38 @@ class App extends Component {
       result: parseInt(this.state.number_one) / parseInt(this.state.number_two)
     }
 
-    axios.post('/backend/', new_operation)
-      .then(res => {
-        this.setState({
-          ...this.state,
-          division: res.data.filter(item => item.operation === 'division'),
-          result: parseInt(this.state.number_one) / parseInt(this.state.number_two)
+    if (this.state.number_one !== "" && this.state.number_two !== ""){
+      axios.post('/backend/', new_operation)
+        .then(res => {
+          this.setState({
+            ...this.state,
+            division: res.data.filter(item => item.operation === 'division'),
+            result: parseInt(this.state.number_one) / parseInt(this.state.number_two)
+          })
         })
-      })
-      .catch(error => {
-        console.log(error)
-      })
-
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 
   deleteHistory(id, operation){
-    console.log(id)
     axios.delete(`/backend/${id}`).then(response => {
-      console.log(id)
-      console.log(response)
-      console.log(this.state[operation].filter(item => item != response.data))
       this.setState({
         ...this.state,
-        [operation]: this.state[operation].filter(item => item._id != id)
+        [operation]: this.state[operation].filter(item => item._id !== id)
       })
     }).catch(error => {
       console.log(error)
+    })
+  }
+
+  clear(){
+    this.setState({
+      ...this.state,
+      number_one: "",
+      number_two: "",
+      result: ""
     })
   }
 
@@ -188,36 +200,41 @@ class App extends Component {
            <input type="button" onClick={this.getSubtraction} value="-" />
            <input type="button" onClick={this.getMultiply} value="x" />
            <input type="button" onClick={this.getDivision} value="/" />
+           <input type="button" onClick={this.clear} value="C" />
          </div>
          <div className="History">
+           <h1>Historia wykonanych operacji:</h1>
            <h2>Suma:</h2>
            {this.state.sum.map(item => 
-            (<div>
-              <p>{item.operation} : {item.number_one} {item.sign} {item.number_two} = {item.result}</p>
-              <input type="button" value="Usuń" onClick={() => this.deleteHistory(item._id, item.operation)}/>
+            (<div className="operation">
+              <p>{item.operation} : <b>{item.number_one} {item.sign} {item.number_two} = {item.result}</b></p>
+              <input className="delete" type="button" value="Usuń" onClick={() => this.deleteHistory(item._id, item.operation)}/>
             </div>))}
            
            <h2>Odejmowanie:</h2>
            {this.state.substraction.map(item => 
-            (<div>
-              <p>{item.operation} : {item.number_one} {item.sign} {item.number_two} = {item.result}</p>
-              <input type="button" value="Usuń" onClick={() => this.deleteHistory(item._id, item.operation)}/>
+            (<div className="operation">
+              <p>{item.operation} : <b>{item.number_one} {item.sign} {item.number_two} = {item.result}</b></p>
+              <input className="delete" type="button" value="Usuń" onClick={() => this.deleteHistory(item._id, item.operation)}/>
             </div>))}
            
            <h2>Mnożenie:</h2>
            {this.state.multiply.map(item => 
-            (<div>
-              <p>{item.operation} : {item.number_one} {item.sign} {item.number_two} = {item.result}</p>
-              <input type="button" value="Usuń" onClick={() => this.deleteHistory(item._id, item.operation)}/>
+            (<div className="operation">
+              <p>{item.operation} : <b>{item.number_one} {item.sign} {item.number_two} = {item.result}</b></p>
+              <input className="delete" type="button" value="Usuń" onClick={() => this.deleteHistory(item._id, item.operation)}/>
             </div>))}
            
            <h2>Dzielenie:</h2>
            {this.state.division.map(item =>
-            (<div>
-              <p>{item.operation} : {item.number_one} {item.sign} {item.number_two} = {item.result}</p>
-              <input type="button" value="Usuń" onClick={() => this.deleteHistory(item._id, item.operation)}/>
+            (<div className="operation">
+              <p>{item.operation} : <b>{item.number_one} {item.sign} {item.number_two} = {item.result}</b></p>
+              <input className="delete" type="button" value="Usuń" onClick={() => this.deleteHistory(item._id, item.operation)}/>
             </div>))}
          </div>
+         <footer>
+           <a href="/form">Daj znać jak ci się podoba ta aplikacja!</a>
+         </footer>
     </div>
     )
   }

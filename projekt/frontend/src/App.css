@@ -6,7 +6,8 @@ body {
 
 .Calculator {
     margin: auto;
-    background-color: rgb(196, 196, 196);
+    background-color: rgb(221, 221, 221);
+    border-radius: 7px;
     width: 400px;
     padding: 20px;
 }
@@ -18,23 +19,64 @@ body {
     padding: 20px;
     border-radius: 7px;
     border-color: rgb(196, 196, 196);
+    outline: none;
 }
 
 .equal{
     text-align: left;
-    background-color: rgb(255, 219, 179);
+    background-color: rgb(179, 214, 255);
 }
 
 .Calculator input[type="button"] {
-    background-color: rgb(139, 139, 139);
+    background-color: rgb(161, 161, 161);
     font-size: 30px;
     border-radius: 7px;
-    border-color: rgb(196, 196, 196);
-    width: 83px;
-    height: 75px;
+    border-color: rgb(161, 161, 161);
+    width: 66px;
+    height: 60px;
     margin: 2px;
+    outline: none;
 }
 
 .History{
-    text-align: left;
+    width: 60%;
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: auto auto;
+    margin: auto;
+    margin-top: 100px;
+}
+
+h2 {
+    grid-column: 1;
+    justify-self: start;
+}
+
+.operation {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.operation p {
+    justify-self: start;
+    font-size: 20px;
+    margin: 10px;
+}
+
+
+.delete {
+    width: 150px;
+    height: 40px;
+    justify-self: end;
+    background-color: rgb(139, 139, 139);
+    border-color: rgb(139, 139, 139);
+    border-radius: 7px;
+    margin: 10px;
+}
+
+h1{
+    border-bottom: 1px solid black ;
+    margin-bottom: 10px;
+    grid-column: span 2;
 }
