@@ -114,17 +114,18 @@ app.post('/', async (req, res) => {
     ...req.body
   })
 
-  const inserted_operation= await new_operation.save();
+  await new_operation.save();
 
-  return res.send(inserted_operation);
+  const response = await Calculator.find();
+
+  return res.send(response);
 });
 
 //DELETE
-app.delete('/', async (req, res) => {
-  const id = req
-  console.log(id)
-  // const result = await Calculator.findByIdAndDelete(id)
-  // res.send(result)
+app.delete('/:id', async (req, res) => {
+  const id = req.params.id
+  const result = await Calculator.findByIdAndDelete(id)
+  res.send(result)
 })
 
 
