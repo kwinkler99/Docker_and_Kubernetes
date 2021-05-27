@@ -3,7 +3,6 @@ const { v4: uuidv4 } = require('uuid');
 
 var cors = require('cors')
 const app = express();
-const appId = uuidv4();
 
 const appPort = 5000;
 
@@ -50,25 +49,7 @@ clientRedis.on('connect', () => {
 });
 
 
-//ENDPOINTY
-// app.get('/mongo', async (req, res) => {
-
-//     Calculator.find(function (err, result) {
-//         if (err) return console.error(err);
-//         return res.send(result);
-//     })    
-// })
-
-// app.get('/redis', async (req, res) => {
-//     const allKeys = await clientRedis.keys("*", (err, result) => {
-//         if (err) return res.sendStatus(400)
-//         return result
-//       })
-//       return res.send({
-//         all: allKeys
-//       })  
-// })
-
+////ENDPOINTY MONGO
 
 //GET
 app.get('/sum', async (req, res) => {
@@ -127,6 +108,67 @@ app.delete('/:id', async (req, res) => {
   const result = await Calculator.findByIdAndDelete(id)
   res.send(result)
 })
+
+
+////ENDPOINTY REDIS
+
+app.get('/form/:key', async (req, res) => {
+  const key = req.params.key
+
+  const find = await clientRedis.get(key);
+  if(find){
+    console.log("uzytkownik zostal znaleziony", find)
+    res.send({
+      correct: true,
+      find: find
+    })
+  } else {
+    console.log("uzytkownik nie zostal znaleziony")
+
+    res.send({
+      correct: false,
+      warning: "Nie ma takiego użytkownika",
+    })
+  }
+
+
+})
+
+app.post('/form', async (req, res) => {
+  const new_form = req.body
+  const key = req.body.name + req.body.surname
+  const check = await clientRedis.get(key);
+  
+  if(check){
+    console.log("uzytkownik zostal dodany")
+
+    res.send({
+      correct: false,
+      warning: "Taki użytkownik już wypełnił ankietę"
+    })
+  } else {
+    console.log("uzytkownik nie zostal dodany")
+
+    await clientRedis.set(key, new_form)
+
+    res.send({
+      correct: true,
+    })
+  }
+})
+
+app.put('/form', async (req, res) => {
+  console.log("uzytkownik zostal zaktualizowany")
+
+  const new_form = req.body
+  const key = req.body.name + req.body.surname
+
+  await clientRedis.set(key, new_form)
+
+  res.send({correct: true})
+})
+
+
 
 
 
