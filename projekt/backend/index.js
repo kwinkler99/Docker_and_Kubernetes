@@ -114,17 +114,14 @@ app.delete('/:id', async (req, res) => {
 
 app.get('/form/:key', async (req, res) => {
   const key = req.params.key
+  const find = JSON.parse(await clientRedis.get(key));
 
-  const find = await clientRedis.get(key);
   if(find){
-    console.log("uzytkownik zostal znaleziony", find)
     res.send({
       correct: true,
       find: find
     })
   } else {
-    console.log("uzytkownik nie zostal znaleziony")
-
     res.send({
       correct: false,
       warning: "Nie ma takiego użytkownika",
@@ -140,16 +137,12 @@ app.post('/form', async (req, res) => {
   const check = await clientRedis.get(key);
   
   if(check){
-    console.log("uzytkownik zostal dodany")
-
     res.send({
       correct: false,
       warning: "Taki użytkownik już wypełnił ankietę"
     })
   } else {
-    console.log("uzytkownik nie zostal dodany")
-
-    await clientRedis.set(key, new_form)
+    await clientRedis.set(key, JSON.stringify(new_form))
 
     res.send({
       correct: true,
@@ -158,12 +151,10 @@ app.post('/form', async (req, res) => {
 })
 
 app.put('/form', async (req, res) => {
-  console.log("uzytkownik zostal zaktualizowany")
-
   const new_form = req.body
   const key = req.body.name + req.body.surname
 
-  await clientRedis.set(key, new_form)
+  await clientRedis.set(key, JSON.stringify(new_form))
 
   res.send({correct: true})
 })
