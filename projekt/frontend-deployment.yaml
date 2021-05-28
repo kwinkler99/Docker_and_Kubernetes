@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend-pod
-          image: frontend
-          imagePullPolicy: Never
+          image: kasiawinkler/frontend
           ports:
             - containerPort: 80
 

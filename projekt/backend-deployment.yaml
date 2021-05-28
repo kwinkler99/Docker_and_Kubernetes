@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
         - name: backend-pod
-          image: backend
-          imagePullPolicy: Never
+          image: kasiawinkler/backend
           ports:
             - containerPort: 5000
           env:

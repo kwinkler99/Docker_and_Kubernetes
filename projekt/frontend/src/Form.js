@@ -58,16 +58,12 @@ class Form extends Component {
                 axios.post('/backend/form', new_form)
                     .then(res => {
                         if(res.data.correct === true){
-                        console.log("uzytkownik dodany" ,res.data)
-
                             this.setState({
                                 ...this.state,
                                 warning: "",
                                 fill: true
                             })
                         } else {
-                        console.log("uzytkownik nie dodany" ,res.data)
-
                             this.setState({
                                 ...this.state,
                                 warning: res.data.warning
@@ -87,8 +83,6 @@ class Form extends Component {
             if(this.state.text !== ""){
                 axios.put('/backend/form', new_form)
                     .then(res => {
-                        console.log("uzytkownik zaktuaizowany")
-
                         this.setState({
                             ...this.state,
                             warning: "",
@@ -100,8 +94,6 @@ class Form extends Component {
                         console.log(error)
                     })
             } else if (this.state.text === ""){
-                console.log("uzytkownik nie zaktualizowany")
-
                 this.setState({
                     ...this.state,
                     warning: "Wypełnij pole powyżej :)"
@@ -140,7 +132,6 @@ class Form extends Component {
             axios.get(`/backend/form/${key}`)
                 .then(res => {
                     if(res.data.correct === true){
-                        console.log("uzytkownik znaleziony" ,res.data.find.text)
                         this.setState({
                             ...this.state,
                             ...res.data.find,
@@ -150,8 +141,6 @@ class Form extends Component {
                             update: true
                         })
                     } else {
-                        console.log("uzytkownik nie znaleziony" ,res.data)
-
                         this.setState({
                             ...this.state,
                             warning: res.data.warning
@@ -210,7 +199,7 @@ class Form extends Component {
                             <input type="button" value="Zatwierdż" onClick={this.sendForm} />
                         </fieldset>
                         <input type="button" value="Wypełnij nową ankietę" onClick={this.newForm}/>
-                        <input type="button" value="Zaktualizuj swoją ankietę" onClick={this.updateForm}/>
+                        {!this.state.update && (<input type="button" value="Zaktualizuj swoją ankietę" onClick={this.updateForm}/>)}
                     </div>)
                 :
                 (
