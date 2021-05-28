@@ -159,6 +159,14 @@ app.put('/form', async (req, res) => {
   res.send({correct: true})
 })
 
+app.delete('/form/:key', async (req, res) => {
+  const key = req.params.key
+
+  await clientRedis.del(key)
+
+  res.send({correct: true})
+})
+
 
 
 

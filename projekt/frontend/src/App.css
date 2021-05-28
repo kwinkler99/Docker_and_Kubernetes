@@ -80,3 +80,12 @@ h1{
     margin-bottom: 10px;
     grid-column: span 2;
 }
+
+a {
+    font-size: 25px;
+    color: black;
+}
+
+footer {
+    margin-top: 50px;
+}

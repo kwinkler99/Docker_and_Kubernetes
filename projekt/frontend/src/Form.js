@@ -22,6 +22,8 @@ class Form extends Component {
         this.newForm = this.newForm.bind(this)
         this.updateForm = this.updateForm.bind(this)
         this.searchForm = this.searchForm.bind(this)
+        this.deleteForm = this.deleteForm.bind(this)
+
     }
 
     setName(ev){
@@ -167,26 +169,49 @@ class Form extends Component {
         }
     }
 
+    deleteForm(){
+        const key = this.state.name + this.state.surname
+        axios.delete(`/backend/form/${key}`)
+            .then(res => {
+                this.setState({
+                    name: "",
+                    surname: "",
+                    text: "",
+                    warning: "Użytkownik został usunięty",
+                    fill: false,
+                    search: false,
+                    update: false
+                })
+            })
+            .catch(error => {
+            console.log(error)
+            })
+    }
+
     render() {
         return(
             <div className="Form">
                 <h1>Formularz</h1>
-                <input type="button" value="Wypełnij nową ankietę" onClick={this.newForm}/>
-                <input type="button" value="Zaktualizuj swoją ankietę" onClick={this.updateForm}/>
+                <div className="form-input" >
                 {!this.state.search ? (
-                <fieldset disabled={this.state.fill}>
-                    <div className="form-input" >
-                        <div className="basic">
-                            <h3>Imię:</h3>
-                            <input type="text" value={this.state.name} onChange={this.setName} readOnly={this.state.update}/>
-                            <h3>Nazwisko:</h3>
-                            <input type="text" value={this.state.surname} onChange={this.setSurname} readOnly={this.state.update}/>
-                        </div>
-                        <textarea value={this.state.text} onChange={this.setText} placeholder="Daj znać jak oceniasz kalkulator!"/>
-                        <h3 className="warning">{this.state.warning}</h3>
-                        <input type="button" value="Zatwierdż" onClick={this.sendForm} />
-                    </div>
-                </fieldset>)
+                    <div>
+                        <fieldset disabled={this.state.fill}>
+                            <div className="basic">
+                                <h3>Imię:</h3>
+                                <input type="text" value={this.state.name} onChange={this.setName} readOnly={this.state.update}/>
+                                <h3>Nazwisko:</h3>
+                                <input type="text" value={this.state.surname} onChange={this.setSurname} readOnly={this.state.update}/>
+                            </div>
+                            <textarea value={this.state.text} onChange={this.setText} placeholder="Daj znać jak oceniasz kalkulator!"/>
+                            <h3 className="warning">{this.state.warning}</h3>
+                            {this.state.update && (
+                                <input type="button" value="Usuń swoją ankietę" onClick={this.deleteForm} />
+                            )}
+                            <input type="button" value="Zatwierdż" onClick={this.sendForm} />
+                        </fieldset>
+                        <input type="button" value="Wypełnij nową ankietę" onClick={this.newForm}/>
+                        <input type="button" value="Zaktualizuj swoją ankietę" onClick={this.updateForm}/>
+                    </div>)
                 :
                 (
                     <div className="form-input">
@@ -196,8 +221,13 @@ class Form extends Component {
                         <input type="text" value={this.state.surname} onChange={this.setSurname}/>
                         <h3 className="warning">{this.state.warning}</h3>
                         <input type="button" value="Szukaj" onClick={this.searchForm}/>
+                        <input type="button" value="Wypełnij nową ankietę" onClick={this.newForm}/>
                     </div>
                 )}
+                </div>
+                <footer>
+                    <a href="/">Powrót do kalkulatora</a>
+                </footer>
             </div>
         )
     }

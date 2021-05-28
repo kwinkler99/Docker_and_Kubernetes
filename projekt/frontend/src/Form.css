@@ -27,6 +27,11 @@ textarea{
     text-align: left;
 }
 
+fieldset {
+    padding: 0;
+    margin: 0;
+}
+
 .Form input[type="text"] {
     background-color: rgb(179, 214, 255);
 
