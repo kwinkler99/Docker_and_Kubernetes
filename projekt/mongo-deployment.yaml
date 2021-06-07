@@ -39,7 +39,7 @@ spec:
             claimName: mongo-pvc
 
 
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       type: mongo

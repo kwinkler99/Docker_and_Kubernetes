@@ -26,7 +26,7 @@ spec:
                   key: REDIS_PORT
 
 
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       type: redis

@@ -2,6 +2,6 @@ Moją aplikacją jest prosty kalkulator, który wykonuje podstawowe operacje i w
 
 - Stworzyłam deployment dla backendu i frontendu z trzema replikami, żeby mieć pewność, że w momencie błędu wywołanego przez jednego z klientów(na przykład jeśli nie przewidzieliśmy niektórych działań) lub wprowadzania jakichś zmian, klienci będą mogli dalej korzystać z aplikacji. 
 
-- Dla baz danych utworzyłam deployment również z 3 replikami. Bazy danych sa bardzo ważne. Wywołanie błedu może spowodować awarie również na backendzie, dlatego jeśli z jednym podem cos sie stanie i załaczy sie drugi to w zapasie pozostanie nam jeszcze trzeci w razie kolejnych awarii.
+- Dla bazy danych Mongo utworzyłam deployment z 1 repliką. Mongo korzysta z trwalosci danych wiec w momencie błędu dane nie zostana utracone(dodatkowo mongo nie jest przystosowane do skalowania). Natomiast redis ma 2 repliki aby nie stracić połączenia z bazą w razie awarii jednej repliki i żeby backend nie przestał działać.
 
 W aplikacji można również wypełnić formularz w którym opisujemy jak podoba nam sie aplikacja. Dane na temat użytkownika i komentarza przechowywane są w redisie, natomiast historia wyszukiwań w mongo z wykorzystaniem trwałości danych. 
